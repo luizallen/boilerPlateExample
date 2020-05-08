@@ -3,9 +3,9 @@
   "classifications": [],
   "description": "Project template with simple configurations to get started ASP.NET Web Api quickly.",
   "name": "Web Api",
-  "defaultName": "WebApi",
-  "identity": "WebApi",
-  "groupIdentity": "WebApi",
+  "defaultName": "TesteWebApi",
+  "identity": "TesteWebApi",
+  "groupIdentity": "TesteWebApi",
   "tags": {
     "language": "C#",
     "type": "project"

@@ -3,8 +3,8 @@
   <TemplateData>
     <Name>Web Api</Name>
     <Description>Project template with simple configurations to get started ASP.NET Web Api quickly.</Description>
-    <TemplateID>WebApi</TemplateID>
-    <DefaultName>WebApi</DefaultName>
+    <TemplateID>TesteWebApi</TemplateID>
+    <DefaultName>TesteWebApi</DefaultName>
     <Icon>project-icon.png</Icon>
     <ProjectType>CSharp</ProjectType>
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
