@@ -1,0 +1,23 @@
+{
+  "author": "Frambach",
+  "classifications": [],
+  "description": "Project template with simple configurations to get started ASP.NET Web Api quickly.",
+  "name": "Web Api",
+  "defaultName": "WebApi",
+  "identity": "WebApi",
+  "groupIdentity": "WebApi",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "shortName": "webapiproject",
+  "sourceName": "WebApiProject",
+  "primaryOutputs": [
+    {
+      "path": ".\\WebApi\\WebApi\\WebApi.csproj"
+    },
+	{
+      "path": ".\\WebApi\\WebApi.Tests\\WebApi.Tests.csproj"
+    }
+  ]
+}

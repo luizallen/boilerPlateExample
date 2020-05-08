@@ -1,0 +1,65 @@
+variables:
+  MajorVersion: 1
+  MinorVersion: 0
+  Patch: 0
+  MainProject: 'Operational.Huey'
+  Port: 6006
+  UseGateway: 'Yes'
+
+name: $(MajorVersion).$(MinorVersion).$(Patch)-$(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+    - master
+    - develop
+    - feature/*
+  paths:
+    include:
+    - azure-pipelines.yml
+    - src/*
+    - test/*
+
+resources:
+  containers:
+  - container: dynamodb
+    image: amazon/dynamodb-local
+    ports:
+      - 8000:8000
+    env:
+      AWS_ACCESS_KEY_ID: root
+      AWS_SECRET_ACCESS_KEY: secret
+  repositories:
+  - repository: templates 
+    type: git
+    name: DevOps/templates
+    ref: refs/heads/master
+
+stages:
+  - template: stages/build/DotNetCoreWithDocker.yaml@templates
+    parameters: 
+      projectName: $(MainProject)
+      majorVersion: $(MajorVersion)
+      minorVersion: $(MinorVersion)
+      patch: $(Patch)
+      packProject: true
+      packProjectFile: '**/src/*.Contract/*.csproj'
+      additionalParameters:
+        services:
+          dynamodb: dynamodb
+  - template: stages/release/Artifacts/Nuget.yaml@templates
+    parameters:
+      additionalParameters:
+        dependsOn: Build
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'master'))
+  - template: stages/release/AWS/DeployECS.yaml@templates
+    parameters:
+      additionalParameters:
+        dependsOn: Build
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'master'))
+      projectName: $(MainProject)
+      file: 'Templates/Towner/API.json'
+      deployParameters:
+        Parameter_SystemManagerPath: '/towner/operational/huey'
+        Parameter_Port: $(Port)
+        Parameter_UseGateway: $(UseGateway)
